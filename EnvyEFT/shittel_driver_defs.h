@@ -45,8 +45,8 @@ namespace kernel::intel
 	INTEL_IOCTL_STRUCT(TRANSLATE_VIRTUAL_ADDRESS_INFO)
 	{
 		uint64_t reserved;
-		uint64_t target_rva;
 		uint64_t translated_physical;
+		uint64_t target_rva;
 	}INTEL_TRANSLATE_VIRTUAL_ADDRESS_INFO, *PINTEL_TRANSLATE_VIRTUAL_ADDRESS_INFO;
 
 	INTEL_IOCTL_STRUCT(MAP_IO_SPACE_BUFFER_INFO)

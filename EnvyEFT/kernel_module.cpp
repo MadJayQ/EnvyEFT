@@ -150,7 +150,8 @@ uint64_t kernel_module::get_module_export(vulnerable_driver* driver, const std::
 
 bool kernel_module::patch_syscall(vulnerable_driver* driver, uint64_t target_address)
 {
-	if (current_syscall_patch != nullptr)
+	DebugBreak();
+	if (current_syscall_patch == nullptr)
 		current_syscall_patch = new syscall_patch_context();
 
 	if (_module_name.compare("win32kfull.sys") != 0)

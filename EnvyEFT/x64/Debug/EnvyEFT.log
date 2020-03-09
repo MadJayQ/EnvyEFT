@@ -1,3 +1,6 @@
-﻿  kernel_module.cpp
-C:\Users\NASCARAdmin\Documents\GitHub\EnvyEFT\EnvyEFT\kernel_module.cpp(125,21): warning C4018: '<': signed/unsigned mismatch
+﻿  main.cpp
+  shittel_driver.cpp
+C:\Users\NASCARAdmin\Documents\GitHub\EnvyEFT\EnvyEFT\shittel_driver.cpp(40,72): warning C4244: 'argument': conversion from 'uint64_t' to 'uint32_t', possible loss of data
+C:\Users\NASCARAdmin\Documents\GitHub\EnvyEFT\EnvyEFT\shittel_driver.cpp(50,54): warning C4244: 'argument': conversion from 'uint64_t' to 'uint32_t', possible loss of data
+  Generating Code...
   EnvyEFT.vcxproj -> C:\Users\NASCARAdmin\Documents\GitHub\EnvyEFT\x64\Debug\EnvyEFTInjector.exe
