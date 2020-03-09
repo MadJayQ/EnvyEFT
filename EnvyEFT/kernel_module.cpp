@@ -116,14 +116,15 @@ uint64_t kernel_module::get_module_export(vulnerable_driver* driver, const std::
 
 	std::cout << "[+] data: " << export_directory->NumberOfFunctions << " " << export_directory->NumberOfNames << std::endl;;
 
-	uint32_t* export_name_table = reinterpret_cast<uint32_t*>(_base_address + export_directory->AddressOfFunctions); //Center export tables
-	uint16_t* ordinal_function_table = reinterpret_cast<uint16_t*>(_base_address + export_directory->AddressOfNameOrdinals);
-	uint32_t* export_function_table = reinterpret_cast<uint32_t*>(_base_address + export_directory->AddressOfFunctions);
+	uint64_t delta = reinterpret_cast<uint64_t>(export_data_buffer) - export_base_address;
+
+	uint32_t* export_name_table = reinterpret_cast<uint32_t*>(export_directory->AddressOfNames + delta); //Center export tables
+	uint16_t* ordinal_function_table = reinterpret_cast<uint16_t*>(export_directory->AddressOfNameOrdinals + delta);
+	uint32_t* export_function_table = reinterpret_cast<uint32_t*>(export_directory->AddressOfFunctions + delta);
 
 	for (auto i = 0; i < export_directory->NumberOfNames; ++i)
 	{
-		DebugBreak();
-		char* name_ptr = (char*)(export_name_table[i]);
+		char* name_ptr = (char*)(export_name_table[i] + delta);
 		std::cout << "x: " << std::hex << name_ptr << std::endl << std::endl;
 		const std::string function_name = std::string(name_ptr);
 		if (!function_name.compare(export_name))
