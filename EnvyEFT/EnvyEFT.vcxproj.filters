@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\exploit">
+      <UniqueIdentifier>{e714f5e1-38d1-4f76-8b84-38b6131e87c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\exploit\intel">
+      <UniqueIdentifier>{d63b7f19-3a30-49da-b608-7c9943b51b29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\platform">
+      <UniqueIdentifier>{12956880-c4a6-44fa-a27d-35df1f8d0a00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\platform\winblows">
+      <UniqueIdentifier>{fab235c4-8d13-42ac-be0e-01ef90d12d05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\exploit">
+      <UniqueIdentifier>{64c54be1-9cb5-44dd-866e-2db825c4a24e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\platform">
+      <UniqueIdentifier>{d4cb3da4-1ea3-4643-8dfc-a15a58872eb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\platform\winblows">
+      <UniqueIdentifier>{6820203a-5387-439e-acda-b5146d96da18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\exploit\intel">
+      <UniqueIdentifier>{3773621f-06d6-4a34-889a-06c739e62d79}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="shittel_driver.h">
+      <Filter>Header Files\exploit\intel</Filter>
+    </ClInclude>
+    <ClInclude Include="shittel_driver_defs.h">
+      <Filter>Header Files\exploit\intel</Filter>
+    </ClInclude>
+    <ClInclude Include="vuln_driver.h">
+      <Filter>Header Files\exploit</Filter>
+    </ClInclude>
+    <ClInclude Include="driver_res.h">
+      <Filter>Header Files\exploit\intel</Filter>
+    </ClInclude>
+    <ClInclude Include="windows_service.h">
+      <Filter>Header Files\platform\winblows</Filter>
+    </ClInclude>
+    <ClInclude Include="ntdefs.h">
+      <Filter>Header Files\platform\winblows</Filter>
+    </ClInclude>
+    <ClInclude Include="kernel_module.h">
+      <Filter>Header Files\platform\winblows</Filter>
+    </ClInclude>
+    <ClInclude Include="ntops.h">
+      <Filter>Header Files\platform\winblows</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="windows_service.cpp">
+      <Filter>Source Files\platform\winblows</Filter>
+    </ClCompile>
+    <ClCompile Include="vuln_driver.cpp">
+      <Filter>Source Files\exploit</Filter>
+    </ClCompile>
+    <ClCompile Include="shittel_driver.cpp">
+      <Filter>Source Files\exploit\intel</Filter>
+    </ClCompile>
+    <ClCompile Include="kernel_module.cpp">
+      <Filter>Source Files\exploit\intel</Filter>
+    </ClCompile>
+    <ClCompile Include="ntops.cpp">
+      <Filter>Source Files\platform\winblows</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

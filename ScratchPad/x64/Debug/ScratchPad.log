@@ -1,0 +1,13 @@
+﻿C:\Visual Studio 2019\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(445,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  kernelimpl.c
+F:\Programming\EnvyEFT\ScratchPad\kernelimpl.c(32,1): warning C4047: 'initializing': 'DWORD64' differs in levels of indirection from 'void *'
+F:\Programming\EnvyEFT\ScratchPad\kernelimpl.c(40,1): warning C4047: 'initializing': 'DWORD64' differs in levels of indirection from 'PVOID'
+  ntops.c
+F:\Programming\EnvyEFT\ScratchPad\ntops.c(201,3): warning C4098: 'RtlInitUnicodeString': 'void' function returning a value
+F:\Programming\EnvyEFT\ScratchPad\ntops.c(211,3): warning C4098: 'RtlFreeUnicodeString': 'void' function returning a value
+  scratch.c
+F:\Programming\EnvyEFT\ScratchPad\scratch.c(5,7): warning C4114: same type qualifier used more than once
+F:\Programming\EnvyEFT\ScratchPad\scratch.c(13,12): warning C4098: 'PrintErrorCode': 'void' function returning a value
+F:\Programming\EnvyEFT\ScratchPad\scratch.c(29,1): warning C4244: 'initializing': conversion from 'DWORD64' to 'DWORD', possible loss of data
+  Generating Code...
+  ScratchPad.vcxproj -> F:\VMs\TestMachine\SharedFolder\exploit.exe

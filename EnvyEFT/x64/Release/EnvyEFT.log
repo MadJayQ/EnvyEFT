@@ -1,0 +1,11 @@
+﻿  kernel_module.cpp
+  main.cpp
+  ntops.cpp
+  shittel_driver.cpp
+  vuln_driver.cpp
+  windows_service.cpp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 324 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  EnvyEFT.vcxproj -> F:\Programming\EnvyEFT\x64\Release\EnvyEFTInjector.exe

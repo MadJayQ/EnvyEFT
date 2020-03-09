@@ -1,0 +1,9 @@
+﻿  main.cpp
+  The contents of <filesystem> are only available with C++17 or later.
+  windows_service.cpp
+  The contents of <filesystem> are only available with C++17 or later.
+F:\Programming\EnvyEFT\EnvyEFT\windows_service.cpp(11,22): error C3083: 'filesystem': the symbol to the left of a '::' must be a type
+F:\Programming\EnvyEFT\EnvyEFT\windows_service.cpp(11,34): error C2039: 'path': is not a member of 'std'
+C:\Visual Studio 2019\VC\Tools\MSVC\14.24.28314\include\string(24): message : see declaration of 'std'
+F:\Programming\EnvyEFT\EnvyEFT\windows_service.cpp(11,38): error C2064: term does not evaluate to a function taking 1 arguments
+  Generating Code...

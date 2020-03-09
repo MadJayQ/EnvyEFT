@@ -1,0 +1,4 @@
+﻿  kernel_module.cpp
+F:\Programming\EnvyEFT\EnvyEFT\kernel_module.cpp(123,21): warning C4018: '<': signed/unsigned mismatch
+F:\Programming\EnvyEFT\EnvyEFT\kernel_module.cpp(126,49): warning C4312: 'type cast': conversion from 'uint32_t' to 'char *' of greater size
+  EnvyEFT.vcxproj -> F:\Programming\EnvyEFT\x64\Debug\EnvyEFTInjector.exe
