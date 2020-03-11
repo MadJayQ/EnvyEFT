@@ -20,52 +20,52 @@ namespace kernel::intel
 		constexpr int UNMAP_PHYSICAL_ADDRESS = 0x1A;
 	}
 
-	typedef struct _INTEL_IOTCL
+	typedef struct _COPY_MEMORY_BUFFER_INFO
 	{
 		uint64_t case_number;
-	}INTEL_IOCTL, * PINTEL_IOCTL;
-
-	INTEL_IOCTL_STRUCT(COPY_MEMORY_BUFFER_INFO) 
-	{
 		uint64_t reserved;
 		uint64_t source;
 		uint64_t destination;
 		uint64_t length;
-	}INTEL_COPY_MEMORY_BUFFER_INFO, *PINTELCOPY_MEMORY_BUFFER_INFO;
+	}COPY_MEMORY_BUFFER_INFO, * PCOPY_MEMORY_BUFFER_INFO;
 
-	INTEL_IOCTL_STRUCT(FILL_MEMORY_BUFFER_INFO)
+	typedef struct _FILL_MEMORY_BUFFER_INFO
 	{
-		uint64_t _reserved1;
+		uint64_t case_number;
+		uint64_t reserved1;
 		uint32_t value;
 		uint32_t reserved2;
 		uint64_t destination;
 		uint64_t length;
-	}INTEL_FILL_MEMORY_BUFFER_INFO, *PINTEL_FILL_MEMORY_BUFFER_INFO;
+	}FILL_MEMORY_BUFFER_INFO, * PFILL_MEMORY_BUFFER_INFO;
 
-	INTEL_IOCTL_STRUCT(TRANSLATE_VIRTUAL_ADDRESS_INFO)
+	typedef struct _GET_PHYS_ADDRESS_BUFFER_INFO
 	{
+		uint64_t case_number;
 		uint64_t reserved;
-		uint64_t translated_physical;
-		uint64_t target_rva;
-	}INTEL_TRANSLATE_VIRTUAL_ADDRESS_INFO, *PINTEL_TRANSLATE_VIRTUAL_ADDRESS_INFO;
+		uint64_t return_physical_address;
+		uint64_t address_to_translate;
+	}GET_PHYS_ADDRESS_BUFFER_INFO, * PGET_PHYS_ADDRESS_BUFFER_INFO;
 
-	INTEL_IOCTL_STRUCT(MAP_IO_SPACE_BUFFER_INFO)
+	typedef struct _MAP_IO_SPACE_BUFFER_INFO
 	{
+		uint64_t case_number;
 		uint64_t reserved;
 		uint64_t return_value;
 		uint64_t return_virtual_address;
 		uint64_t physical_address_to_map;
 		uint32_t size;
-	}INTEL_MAP_IO_SPACE_BUFFER_INFO, * PINTEL_MAP_IO_SPACE_BUFFER_INFO;
+	}MAP_IO_SPACE_BUFFER_INFO, * PMAP_IO_SPACE_BUFFER_INFO;
 
-	INTEL_IOCTL_STRUCT(UNMAP_IO_SPACE_BUFFER_INFO)
+	typedef struct _UNMAP_IO_SPACE_BUFFER_INFO
 	{
+		uint64_t case_number;
 		uint64_t reserved1;
 		uint64_t reserved2;
 		uint64_t virt_address;
 		uint64_t reserved3;
 		uint32_t number_of_bytes;
-	}INTEL_UNMAP_IO_SPACE_BUFFER_INFO, *PINTEL_UNMAP_IO_SPACE_BUFFER_INFO;
+	}UNMAP_IO_SPACE_BUFFER_INFO, * PUNMAP_IO_SPACE_BUFFER_INFO;
 
 
 }

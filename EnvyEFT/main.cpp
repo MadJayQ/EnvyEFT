@@ -22,15 +22,16 @@ int main(int argc, char** args)
 	std::cout << *module;
 	std::cout << *ntkrnl;
 
-	uint8_t shellbytes[] = { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0xC3};
+	uint8_t shellbytes[] = { 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0x90, 0xC3};
 
 	uint64_t shellcode_buffer = reinterpret_cast<uint64_t>(VirtualAlloc(nullptr, sizeof(shellbytes), MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE));
+	//win32u->patch_syscall(driver_resource.get(), shellcode_buffer);
+	////win32u->execute_and_restore_syscall<void(*)(void)>(driver_resource.get());
+	uint64_t shellcode_pool = driver_resource->allocate_kernel_pool(POOL_TYPE::NonPagedPoolExecute, sizeof(shellbytes));
+	//win32u->patch_syscall(driver_resource.get(), shellcode_buffer);
+	//win32u->execute_and_restore_syscall<void>(driver_resource.get(), nullptr);
 
-	memcpy((void*)shellcode_buffer, (void*)shellbytes, sizeof(shellbytes));
-
-	win32u->patch_syscall(driver_resource.get(), shellcode_buffer);
-	win32u->execute_and_restore_syscall<void(*)(void)>(driver_resource.get());
-	
+	//driver_resource->free_kernel_pool(shellcode_pool);
 
 	return 0;
 }

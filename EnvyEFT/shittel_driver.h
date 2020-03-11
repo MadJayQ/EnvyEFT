@@ -24,7 +24,7 @@ namespace kernel
 			uint64_t intel_map_physical(uint64_t address, uint32_t size);
 			bool intel_unmap_physical(uint64_t address, uint32_t size);
 			uint64_t intel_rva_to_physical(uint64_t address);
-			bool intel_copy_memory(uint64_t destination, void* source, size_t size);
+			bool intel_copy_memory(uint64_t destination, uint64_t source, uint64_t size);
 		};
 	}
 }

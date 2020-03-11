@@ -125,7 +125,6 @@ uint64_t kernel_module::get_module_export(vulnerable_driver* driver, const std::
 	for (auto i = 0; i < export_directory->NumberOfNames; ++i)
 	{
 		char* name_ptr = (char*)(export_name_table[i] + delta);
-		std::cout << "x: " << std::hex << name_ptr << std::endl << std::endl;
 		const std::string function_name = std::string(name_ptr);
 		if (!function_name.compare(export_name))
 		{
@@ -150,7 +149,6 @@ uint64_t kernel_module::get_module_export(vulnerable_driver* driver, const std::
 
 bool kernel_module::patch_syscall(vulnerable_driver* driver, uint64_t target_address)
 {
-	DebugBreak();
 	if (current_syscall_patch == nullptr)
 		current_syscall_patch = new syscall_patch_context();
 
@@ -161,6 +159,8 @@ bool kernel_module::patch_syscall(vulnerable_driver* driver, uint64_t target_add
 	}
 
 	const uint64_t target_syscall = get_module_export(driver, "NtGdiGetCOPPCompatibleOPMInformation");
+
+	std::cout << "kernel function ptr" << std::hex << target_syscall << std::dec << std::endl;
 
 	if (target_syscall == 0)
 	{

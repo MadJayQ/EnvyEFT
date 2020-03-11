@@ -1,6 +1,4 @@
-﻿  main.cpp
-  shittel_driver.cpp
-C:\Users\NASCARAdmin\Documents\GitHub\EnvyEFT\EnvyEFT\shittel_driver.cpp(40,72): warning C4244: 'argument': conversion from 'uint64_t' to 'uint32_t', possible loss of data
-C:\Users\NASCARAdmin\Documents\GitHub\EnvyEFT\EnvyEFT\shittel_driver.cpp(50,54): warning C4244: 'argument': conversion from 'uint64_t' to 'uint32_t', possible loss of data
-  Generating Code...
-  EnvyEFT.vcxproj -> C:\Users\NASCARAdmin\Documents\GitHub\EnvyEFT\x64\Debug\EnvyEFTInjector.exe
+﻿  shittel_driver.cpp
+F:\Programming\EnvyEFT\EnvyEFT\shittel_driver.cpp(47,72): warning C4244: 'argument': conversion from 'uint64_t' to 'uint32_t', possible loss of data
+F:\Programming\EnvyEFT\EnvyEFT\shittel_driver.cpp(59,54): warning C4244: 'argument': conversion from 'uint64_t' to 'uint32_t', possible loss of data
+  EnvyEFT.vcxproj -> F:\Programming\EnvyEFT\x64\Debug\EnvyEFTInjector.exe
