@@ -35,9 +35,7 @@ namespace kernel
 		uint64_t get_module_export(vulnerable_driver* driver, const std::string& export_name);
 
 		bool patch_syscall(vulnerable_driver* driver, uint64_t target_address);
-
-		template<typename T, typename ...Args>
-		bool execute_and_restore_syscall(vulnerable_driver* driver, T* output_buffer, const Args ...args);
+		bool restore_syscall(vulnerable_driver* driver);
 
 	private:
 		uint64_t _base_address;
@@ -46,45 +44,47 @@ namespace kernel
 
 		std::string _module_name;
 
-		syscall_patch_context* current_syscall_patch;
+		syscall_patch_context* current_syscall_patch = nullptr;
 	};
 
-	template<typename T, typename ...Args>
-	inline bool kernel_module::execute_and_restore_syscall(vulnerable_driver* driver, T* output_buffer, const Args ...args)
-	{
+	//template<typename T, typename ...Args>
+	//inline bool kernel_module::execute_and_restore_syscall(vulnerable_driver* driver, T* output_buffer, const Args ...args)
+	//{
 
-		constexpr auto call_void = std::is_same_v<T, void>;
+	//	constexpr auto call_void = std::is_same_v<T, void>;
 
-		if constexpr (!call_void)
-		{
-			if (!output_buffer)
-				return false;
-		}
-		else
-		{
-			UNREFERENCED_PARAMETER(output_buffer);
-		}
+	//	if constexpr (!call_void)
+	//	{
+	//		if (!output_buffer)
+	//			return false;
+	//	}
+	//	else
+	//	{
+	//		UNREFERENCED_PARAMETER(output_buffer);
+	//	}
 
-		FARPROC usermode_addr = GetProcAddress(LoadLibrary("win32u.dll"), "NtGdiGetCOPPCompatibleOPMInformation");
+	//	FARPROC usermode_addr = GetProcAddress(LoadLibrary("win32u.dll"), "NtGdiGetCOPPCompatibleOPMInformation");
 
-		if (current_syscall_patch == nullptr)
-		{
-			throw "No valid syscall patch context set";
-		}
-		using FunctionFn = T(__stdcall*)(Args...);
-		const auto fn = reinterpret_cast<FunctionFn>(usermode_addr);
+	//	if (current_syscall_patch == nullptr)
+	//	{
+	//		throw "No valid syscall patch context set";
+	//	}
+	//	using FunctionFn = T(__stdcall*)(Args...);
+	//	const auto fn = reinterpret_cast<FunctionFn>(usermode_addr);
 
-		if constexpr (!call_void)
-		{
-			*output_buffer = fn(args...);
-		}
-		else
-		{
-			fn(args...);
-		}
+	//	if constexpr (!call_void)
+	//	{
+	//		DebugBreak();
+	//		*output_buffer = fn(args...);
+	//	}
+	//	else
+	//	{
+	//		fn(args...);
+	//	}
 
-		return driver->driver_force_write(current_syscall_patch->kernel_function_pointer, current_syscall_patch->kernel_original_function_jmp, sizeof(current_syscall_patch->kernel_original_function_jmp));
+	//	bool success = driver->driver_force_write(current_syscall_patch->kernel_function_pointer, current_syscall_patch->kernel_original_function_jmp, sizeof(current_syscall_patch->kernel_original_function_jmp));
+	//	delete current_syscall_patch;
 
-		delete current_syscall_patch;
-	}
+	//	return success;
+	//}
 }

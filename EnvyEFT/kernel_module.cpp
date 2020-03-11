@@ -149,8 +149,7 @@ uint64_t kernel_module::get_module_export(vulnerable_driver* driver, const std::
 
 bool kernel_module::patch_syscall(vulnerable_driver* driver, uint64_t target_address)
 {
-	if (current_syscall_patch == nullptr)
-		current_syscall_patch = new syscall_patch_context();
+	current_syscall_patch = new syscall_patch_context();
 
 	if (_module_name.compare("win32kfull.sys") != 0)
 	{
@@ -176,11 +175,18 @@ bool kernel_module::patch_syscall(vulnerable_driver* driver, uint64_t target_add
 	}
 
 	memcpy(current_syscall_patch->function_call_template + 2, &target_address, sizeof(uint64_t));
-
 	if (!driver->driver_force_write(target_syscall, current_syscall_patch->function_call_template, sizeof(current_syscall_patch->function_call_template)))
 		return false;
 
 	return true;
+}
+
+bool kernel_module::restore_syscall(vulnerable_driver* driver)
+{
+	bool success = driver->driver_force_write(current_syscall_patch->kernel_function_pointer, current_syscall_patch->kernel_original_function_jmp, sizeof(current_syscall_patch->kernel_original_function_jmp));
+	delete current_syscall_patch;
+
+	return success;
 }
 
 std::ostream& kernel::operator<<(std::ostream& os, const kernel_module& module)
