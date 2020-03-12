@@ -37,6 +37,9 @@
     <Filter Include="Source Files\exploit\intel">
       <UniqueIdentifier>{3773621f-06d6-4a34-889a-06c739e62d79}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\platform\winblows\asm">
+      <UniqueIdentifier>{d34ecfcd-a8ae-4ed9-a866-e6bdf9da92f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="shittel_driver.h">
@@ -83,5 +86,10 @@
     <ClCompile Include="ntops.cpp">
       <Filter>Source Files\platform\winblows</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="token_steal.asm">
+      <Filter>Header Files\platform\winblows\asm</Filter>
+    </MASM>
   </ItemGroup>
 </Project>

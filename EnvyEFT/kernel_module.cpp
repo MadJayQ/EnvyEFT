@@ -114,8 +114,6 @@ uint64_t kernel_module::get_module_export(vulnerable_driver* driver, const std::
 		VirtualFree(export_data_buffer, 0, MEM_RELEASE);
 	}
 
-	std::cout << "[+] data: " << export_directory->NumberOfFunctions << " " << export_directory->NumberOfNames << std::endl;;
-
 	uint64_t delta = reinterpret_cast<uint64_t>(export_data_buffer) - export_base_address;
 
 	uint32_t* export_name_table = reinterpret_cast<uint32_t*>(export_directory->AddressOfNames + delta); //Center export tables
@@ -158,8 +156,6 @@ bool kernel_module::patch_syscall(vulnerable_driver* driver, uint64_t target_add
 	}
 
 	const uint64_t target_syscall = get_module_export(driver, "NtGdiGetCOPPCompatibleOPMInformation");
-
-	std::cout << "kernel function ptr" << std::hex << target_syscall << std::dec << std::endl;
 
 	if (target_syscall == 0)
 	{

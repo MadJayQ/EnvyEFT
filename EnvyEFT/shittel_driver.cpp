@@ -54,7 +54,6 @@ namespace kernel::intel
 			return false;
 		}
 
-		DebugBreak();
 		bool success = driver_write_primitive(mapped_physical_address, buffer, buffer_size);
 
 		if (!intel_unmap_physical(mapped_physical_address, buffer_size))
@@ -77,9 +76,6 @@ namespace kernel::intel
 
 		if (allocate_pool_kernel_addr == 0)
 			allocate_pool_kernel_addr = ntoskrnl->get_module_export(this, "ExAllocatePool");
-
-		std::cout << "Kernel ExAllocatePool" << std::hex << allocate_pool_kernel_addr << std::dec << std::endl;
-
 		uint64_t pool_addr = 0;
 
 		win32u->patch_syscall(this, allocate_pool_kernel_addr);
@@ -87,7 +83,6 @@ namespace kernel::intel
 			using fnExAllocatePool = uint64_t(WINAPI*)(POOL_TYPE, SIZE_T);
 			static const auto usermode_addr = reinterpret_cast<void*>(GetProcAddress(LoadLibrary("win32u.dll"), "NtGdiGetCOPPCompatibleOPMInformation"));
 			fnExAllocatePool ExAllocatePool = reinterpret_cast<fnExAllocatePool>(usermode_addr);
-			DebugBreak();
 			pool_addr = ExAllocatePool(pool_type, pool_size);
 		}
 		win32u->restore_syscall(this);
