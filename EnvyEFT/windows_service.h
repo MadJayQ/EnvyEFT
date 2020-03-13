@@ -3,6 +3,7 @@
 #include "ntdefs.h"
 
 #include <string>
+#include <vector>
 
 namespace kernel
 {
@@ -27,16 +28,16 @@ namespace kernel
 	{
 		using handle = SC_HANDLE;
 	public:
-		windows_service(const std::string& path);
+		windows_service(const std::string& driver_name);
 
 		bool register_service();
 		bool start_service();
 
 		bool stop_service();
-		bool delete_service();
+
+		void load_driver(const uint8_t* driver_bytes, size_t byte_size);
 
 	private:
-		void set_path(const std::string& path);
 
 		static handle system_service_manager();
 	private:

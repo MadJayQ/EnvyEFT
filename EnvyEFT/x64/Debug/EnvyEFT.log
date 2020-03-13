@@ -1,2 +1,19 @@
-﻿  Assembling token_steal.asm...
-  EnvyEFT.vcxproj -> C:\Users\NASCARAdmin\Documents\GitHub\EnvyEFT\x64\Debug\EnvyEFTInjector.exe
+﻿  kernel_module.cpp
+  main.cpp
+  ntops.cpp
+  shittel_driver.cpp
+  vuln_driver.cpp
+  windows_service.cpp
+F:\Programming\EnvyEFT\EnvyEFT\ntops.cpp(292,6): error C2039: 'ProcessId': is not a member of '_SYSTEM_HANDLE'
+F:\Programming\EnvyEFT\EnvyEFT\ntops.cpp(292,6): error C2039: 		if (sys_handle.ProcessId != pid || (HANDLE)sys_handle.Handle != handle) {
+F:\Programming\EnvyEFT\EnvyEFT\ntops.cpp(292,6): error C2039: 		   ^
+F:\Programming\EnvyEFT\EnvyEFT\ntdefs.h(19): message : see declaration of '_SYSTEM_HANDLE'
+F:\Programming\EnvyEFT\EnvyEFT\ntdefs.h(19): message : typedef struct _SYSTEM_HANDLE
+F:\Programming\EnvyEFT\EnvyEFT\ntops.cpp(292,6): error C2039: 'Handle': is not a member of '_SYSTEM_HANDLE'
+F:\Programming\EnvyEFT\EnvyEFT\ntops.cpp(292,6): error C2039: 		if (sys_handle.ProcessId != pid || (HANDLE)sys_handle.Handle != handle) {
+F:\Programming\EnvyEFT\EnvyEFT\ntops.cpp(292,6): error C2039: 		   ^
+F:\Programming\EnvyEFT\EnvyEFT\ntdefs.h(19): message : see declaration of '_SYSTEM_HANDLE'
+F:\Programming\EnvyEFT\EnvyEFT\ntdefs.h(19): message : typedef struct _SYSTEM_HANDLE
+F:\Programming\EnvyEFT\EnvyEFT\vuln_driver.cpp(62,6): warning C4312: 'reinterpret_cast': conversion from 'ULONG' to 'HANDLE' of greater size
+F:\Programming\EnvyEFT\EnvyEFT\vuln_driver.cpp(62,6): warning C4312: 		if (system_handle.UniqueProcessId != reinterpret_cast<HANDLE>(currentPID))
+F:\Programming\EnvyEFT\EnvyEFT\vuln_driver.cpp(62,6): warning C4312: 		   ^

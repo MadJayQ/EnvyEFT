@@ -21,6 +21,8 @@ namespace kernel
 		virtual uint64_t allocate_kernel_pool(POOL_TYPE pool_type, uint64_t pool_size) = 0;
 		virtual bool free_kernel_pool(uint64_t address) = 0;
 
+		virtual bool remove_from_unloaded_drivers();
+
 		HANDLE get_handle() const { return driver_handle; }
 
 	protected:

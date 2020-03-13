@@ -18,12 +18,14 @@ typedef PCUNICODE_STRING NT_PCUNICODE_STRING;
 
 typedef struct _SYSTEM_HANDLE
 {
-	ULONG ProcessId;
-	BYTE ObjectTypeNumber;
-	BYTE Flags;
-	USHORT Handle;
 	PVOID Object;
-	ACCESS_MASK GrantedAccess;
+	HANDLE UniqueProcessId;
+	HANDLE HandleValue;
+	ULONG GrantedAccess;
+	USHORT CreatorBackTraceIndex;
+	USHORT ObjectTypeIndex;
+	ULONG HandleAttributes;
+	ULONG Reserved;
 } SYSTEM_HANDLE, * PSYSTEM_HANDLE;
 
 typedef struct _SYSTEM_HANDLE_INFORMATION

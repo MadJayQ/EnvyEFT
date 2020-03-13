@@ -1,30 +1,23 @@
 #include "windows_service.h"
 
 #include <filesystem>
-
+#include <array>
+#include <fstream>
 
 using namespace kernel;
 
 
-void windows_service::set_path(const std::string& path)
-{
-	_path = path;
-	_driver_name = std::filesystem::path(path).filename().string();
-}
 
-kernel::windows_service::handle kernel::windows_service::system_service_manager()
+windows_service::handle kernel::windows_service::system_service_manager()
 {
 	//Raise a GOTCHA so you don't forget to release this
 	return OpenSCManager(nullptr, nullptr, SC_MANAGER_CREATE_SERVICE);
 }
 
-windows_service::windows_service(const std::string& path)
+windows_service::windows_service(const std::string& driver_name)
 {
-	set_path(path);
-	if (!register_service())
-		throw new windows_service_exception("failed to register service", 0);
-	if (!start_service())
-		throw new windows_service_exception("failed to create service", 0);
+	_path = "";
+	_driver_name = driver_name;
 }
 
 bool windows_service::register_service()
@@ -65,12 +58,55 @@ bool windows_service::stop_service()
 {
 	const handle service_manager = system_service_manager();
 
-	return false;
+	if (!service_manager)
+		return false;
+
+	const handle service_handle = OpenService(service_manager, _driver_name.c_str(), SERVICE_STOP | DELETE);
+
+	if (!service_handle)
+	{
+		CloseServiceHandle(service_manager);
+		return false;
+	}
+
+	SERVICE_STATUS status = { 0 };
+
+	const bool result = ControlService(service_handle, SERVICE_CONTROL_STOP, &status) && DeleteService(service_handle);
+
+	CloseHandle(service_handle);
+	CloseHandle(service_manager);
+
+	return result;
 }
 
-bool windows_service::delete_service()
+void windows_service::load_driver(const uint8_t* driver_bytes, size_t num_bytes)
 {
-	return false;
+	std::array<char, MAX_PATH> directory;
+	directory.fill('\0');
+
+	const uint32_t temp_path_result = GetTempPathA(sizeof(directory), directory.data());
+
+	if (!temp_path_result || temp_path_result > MAX_PATH)
+		throw new windows_service_exception("INVALID TEMP PATH", 0);
+
+	const std::string driver_path = std::string(directory.data()) + "\\" + _driver_name;
+	std::remove(driver_path.c_str());
+
+	_path = driver_path;
+	std::ofstream file_ofstream(driver_path.c_str(), std::ios_base::out | std::ios_base::binary);
+
+	if (!file_ofstream.write((const char*)driver_bytes, num_bytes))
+	{
+		file_ofstream.close();
+		throw new windows_service_exception("failed to write driver bytes", 0);
+		return;
+	}
+
+	file_ofstream.close();
+	if (!register_service())
+		throw new windows_service_exception("failed to register service", 0);
+	if (!start_service())
+		throw new windows_service_exception("failed to create service", 0);
 }
 
 

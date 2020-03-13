@@ -19,6 +19,7 @@
 #define ObjectBasicInformation 0
 #define ObjectNameInformation 1
 #define ObjectTypeInformation 2
+#define SystemExtendedHandleInformation 64
 
 
 /*
